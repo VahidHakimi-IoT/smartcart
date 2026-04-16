@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vahid Hakimi — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow: #FFE03A;
+      --pink:   #FF4F91;
+      --blue:   #2B6FFF;
+      --green:  #00D97E;
+      --bg:     #0A0A0A;
+      --surface:#141414;
+      --border: #222;
+      --text:   #F5F5F5;
+      --muted:  #888;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(14px);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem; font-weight: 800;
+      color: var(--yellow); text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 40px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #1A1A1A; border: 1px solid var(--border);
+      border-radius: 30px; padding: 6px 16px;
+      font-size: 0.8rem; color: var(--muted);
+      margin-bottom: 28px; width: fit-content;
+    }
+    .hero-tag span {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); animation: blink 1.8s ease infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800; line-height: 1.0;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+    }
+    .hero h1 .hl-yellow { color: var(--yellow); }
+    .hero h1 .hl-pink   { color: var(--pink); }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted); max-width: 540px;
+      margin-bottom: 40px; line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--yellow); color: #0A0A0A;
+      padding: 14px 28px; border-radius: 10px;
+      font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,224,58,0.3); }
+    .btn-ghost {
+      border: 1px solid var(--border); color: var(--text);
+      padding: 14px 28px; border-radius: 10px;
+      font-weight: 500; font-size: 0.95rem;
+      text-decoration: none; transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--muted); background: #1a1a1a; }
+
+    /* floating blobs */
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); opacity: 0.12; pointer-events: none;
+    }
+    .blob-1 { width: 500px; height: 500px; background: var(--yellow); top: -100px; right: -100px; }
+    .blob-2 { width: 300px; height: 300px; background: var(--pink);   bottom: 0;  left: -60px; }
+    .blob-3 { width: 200px; height: 200px; background: var(--blue);   top: 50%;   right: 20%; }
+
+    /* ── SKILLS ── */
+    .section { padding: 90px 40px; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 48px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 20px;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .skill-card:hover { transform: translateY(-4px); }
+    .skill-card:nth-child(1) { border-top: 3px solid var(--yellow); }
+    .skill-card:nth-child(2) { border-top: 3px solid var(--pink); }
+    .skill-card:nth-child(3) { border-top: 3px solid var(--blue); }
+    .skill-card:nth-child(4) { border-top: 3px solid var(--green); }
+    .skill-card:nth-child(5) { border-top: 3px solid var(--yellow); }
+    .skill-card:nth-child(6) { border-top: 3px solid var(--pink); }
+    .skill-card:nth-child(7) { border-top: 3px solid var(--blue); }
+    .skill-card:nth-child(8) { border-top: 3px solid var(--green); }
+    .skill-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .skill-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+    .skill-desc { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .project-thumb {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative; overflow: hidden;
+    }
+    .project-thumb-smartcart { background: linear-gradient(135deg, #1A1000 0%, #2A1800 100%); }
+    .project-thumb-smartcart::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 60% 40%, rgba(255,224,58,0.25) 0%, transparent 70%);
+    }
+    .project-thumb-iot { background: linear-gradient(135deg, #001025 0%, #001A35 100%); }
+    .project-thumb-iot::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 40% 60%, rgba(43,111,255,0.3) 0%, transparent 70%);
+    }
+    .project-thumb-portfolio { background: linear-gradient(135deg, #150010 0%, #250020 100%); }
+    .project-thumb-portfolio::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(255,79,145,0.25) 0%, transparent 70%);
+    }
+    .project-body { padding: 22px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tag {
+      font-size: 0.72rem; font-weight: 600; padding: 3px 10px;
+      border-radius: 20px; border: 1px solid;
+    }
+    .tag-yellow { color: var(--yellow); border-color: rgba(255,224,58,0.25); background: rgba(255,224,58,0.08); }
+    .tag-pink   { color: var(--pink);   border-color: rgba(255,79,145,0.25);  background: rgba(255,79,145,0.08); }
+    .tag-blue   { color: #6B9FFF;       border-color: rgba(43,111,255,0.25);  background: rgba(43,111,255,0.08); }
+    .tag-green  { color: var(--green);  border-color: rgba(0,217,126,0.25);   background: rgba(0,217,126,0.08); }
+    .project-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem; font-weight: 800;
+      margin-bottom: 8px; letter-spacing: -0.5px;
+    }
+    .project-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+    .project-link {
+      color: var(--yellow); font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+      transition: gap 0.2s;
+    }
+    .project-link:hover { gap: 9px; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: center;
+    }
+    .about-text p {
+      color: var(--muted); font-size: 1.05rem;
+      line-height: 1.8; margin-bottom: 16px;
+    }
+    .about-text p strong { color: var(--text); }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem; font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 4px;
+    }
+    .stat-num.y { color: var(--yellow); }
+    .stat-num.p { color: var(--pink); }
+    .stat-num.b { color: #6B9FFF; }
+    .stat-num.g { color: var(--green); }
+    .stat-label { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--yellow);
+      border-radius: 24px; padding: 60px 48px;
+      text-align: center; color: #0A0A0A;
+    }
+    .contact-box h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800; letter-spacing: -1.5px; margin-bottom: 12px;
+    }
+    .contact-box p { font-size: 1rem; opacity: 0.7; margin-bottom: 32px; }
+    .contact-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .contact-btn {
+      background: #0A0A0A; color: var(--yellow);
+      padding: 13px 26px; border-radius: 10px;
+      font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; transition: transform 0.2s;
+    }
+    .contact-btn:hover { transform: scale(1.04); }
+    .contact-btn.ghost {
+      background: transparent; color: #0A0A0A;
+      border: 2px solid #0A0A0A;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--muted); font-size: 0.85rem; flex-wrap: wrap; gap: 10px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 0 40px;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero, .section { padding-left: 20px; padding-right: 20px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-box { padding: 40px 24px; }
+      footer { padding: 24px 20px; }
+      .divider { margin: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">VH.</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-tag"><span></span> Available for opportunities</div>
+  <h1>
+    Vahid<br>
+    <span class="hl-yellow">Hakimi</span><br>
+    <span class="hl-pink">IoT &</span> Web Dev
+  </h1>
+  <p class="hero-sub">
+    Building interactive web applications and connected IoT systems.
+    Passionate about clean code, modern JavaScript, and smart interfaces.
+  </p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">View Projects →</a>
+    <a href="https://github.com/VahidHakimi-IoT" target="_blank" class="btn-ghost">GitHub</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-label">What I Know</div>
+  <h2 class="section-title">Skills &<br>Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML & CSS</div>
+      <div class="skill-desc">Semantic markup, Flexbox, Grid, responsive design</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-desc">DOM manipulation, async/await, fetch API, ES6+</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🖥️</div>
+      <div class="skill-name">Node.js & Express</div>
+      <div class="skill-desc">REST APIs, backend routing, server-side JavaScript</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📡</div>
+      <div class="skill-name">IoT & Embedded</div>
+      <div class="skill-desc">Sensor integration, device programming, data streams</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔧</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-desc">Version control, repositories, GitHub Pages, deployment</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">UI / UX</div>
+      <div class="skill-desc">Component design, dark/light themes, accessibility</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">JSON & APIs</div>
+      <div class="skill-desc">Data formats, REST APIs, external service integration</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🚀</div>
+      <div class="skill-name">Deployment</div>
+      <div class="skill-desc">GitHub Pages, Vercel, hosting, CI/CD basics</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-label">What I've Built</div>
+  <h2 class="section-title">Featured<br>Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-thumb project-thumb-smartcart">🛒</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag tag-yellow">JavaScript</span>
+          <span class="tag tag-pink">HTML/CSS</span>
+          <span class="tag tag-green">AI Chatbot</span>
+        </div>
+        <div class="project-name">SmartCart</div>
+        <p class="project-desc">
+          A full-featured e-commerce web app with product filtering, cart management,
+          dark mode, and an AI-powered shopping assistant. Built with vanilla JS and deployed on Vercel.
+        </p>
+        <a href="https://github.com/VahidHakimi-IoT/browser-programming" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb project-thumb-iot">📡</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag tag-blue">IoT</span>
+          <span class="tag tag-green">Sensors</span>
+          <span class="tag tag-yellow">JavaScript</span>
+        </div>
+        <div class="project-name">Browser Programming</div>
+        <p class="project-desc">
+          A collection of browser-based programming exercises and mini-projects
+          developed during the Web Development course — covering DOM, async JS, APIs, and more.
+        </p>
+        <a href="https://github.com/VahidHakimi-IoT/browser-programming" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb project-thumb-portfolio">🌟</div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="tag tag-pink">HTML</span>
+          <span class="tag tag-blue">CSS</span>
+          <span class="tag tag-yellow">GitHub Pages</span>
+        </div>
+        <div class="project-name">This Portfolio</div>
+        <p class="project-desc">
+          A hand-coded personal portfolio site with bold typography, smooth animations,
+          and responsive layout. Hosted on GitHub Pages at VahidHakimi-IoT.github.io.
+        </p>
+        <a href="#" class="project-link">You're here now →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-label">Who I Am</div>
+      <h2 class="section-title">About<br>Me</h2>
+      <p>
+        I'm <strong>Vahid Hakimi</strong>, a web developer and IoT enthusiast currently
+        completing my studies in browser programming and modern web technologies.
+      </p>
+      <p>
+        I enjoy building things that are both <strong>functional and beautiful</strong> —
+        from interactive e-commerce apps to connected IoT systems. I care about
+        clean code, user experience, and continuous learning.
+      </p>
+      <p>
+        When I'm not coding, I'm exploring the intersection of
+        <strong>hardware and software</strong> — connecting the physical world
+        to the web.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num y">3+</div>
+        <div class="stat-label">Technologies learned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num p">IoT</div>
+        <div class="stat-label">Background</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num b">100%</div>
+        <div class="stat-label">Passion for code</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num g">Live</div>
+        <div class="stat-label">Projects deployed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact-box">
+    <h2>Let's Work Together</h2>
+    <p>Open to internships, collaborations, and new opportunities.</p>
+    <div class="contact-links">
+      <a href="https://github.com/VahidHakimi-IoT" target="_blank" class="contact-btn">GitHub Profile</a>
+      <a href="mailto:vahidhakimi@gmail.com" class="contact-btn ghost">Send Email</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Vahid Hakimi</span>
+  <span>Built with HTML, CSS & JavaScript · Hosted on GitHub Pages</span>
+</footer>
+
+</body>
+</html>
